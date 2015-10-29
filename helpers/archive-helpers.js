@@ -59,7 +59,6 @@ exports.isUrlArchived = function(url) {
   try {
     fs.accessSync(url, fs.R_OK);
   } catch (e) {
-    console.log(e);
     exists = false;
   }
 

@@ -7,20 +7,23 @@ var fs = require('fs');
 var sites = archive.readListOfUrls(); 
 var siteToProcess = sites.shift(); 
 
-var updateFile = function(){
-  archive.rewriteList(sites.join('\n')); 
-}
+if(siteToProcess){
 
-httpGet.get(siteToProcess, function (err, res) {
-  if (err) {
-    console.log(err);
+  var updateFile = function(){
+    archive.rewriteList(sites.join('\n')); 
   }
-  
-  var siteDoc = res.buffer.toString(); 
 
-  console.log(archive.writeHtmlFile)
+  httpGet.get(siteToProcess, function (err, res) {
+    if (err) {
+      console.log(err);
+    }
+    
+    var siteDoc = res.buffer.toString(); 
 
-  archive.writeHtmlFile(siteToProcess, siteDoc, updateFile); 
+    console.log(archive.writeHtmlFile)
 
-});
+    archive.writeHtmlFile(siteToProcess, siteDoc, updateFile); 
+
+  });  
+}
 
