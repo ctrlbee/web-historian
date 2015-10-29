@@ -29,13 +29,31 @@ exports.readListOfUrls = function() {
 };
 
 exports.isUrlInList = function() {
+  return false;
 };
 
-exports.addUrlToList = function() {
+exports.addUrlToList = function(url) {
+  var saved = true;
+  fs.appendFile(exports.paths.list, url + '\n', function(err){
+    if(err){saved = false;}
+  });
+  return saved; 
 };
 
-exports.isUrlArchived = function() {
+exports.isUrlArchived = function(url) {
+  var exists = true;
+
+  try {
+    fs.accessSync(url, fs.R_OK);
+  } catch (e) {
+    console.log(e);
+    exists = false;
+  }
+
+  return exists;
 };
 
 exports.downloadUrls = function() {
+
+
 };
