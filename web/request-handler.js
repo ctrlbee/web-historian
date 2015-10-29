@@ -14,7 +14,7 @@ var httpHelpers = require('./http-helpers.js')
 
 exports.handleRequest = function (req, res) {
   // SERVES HTML REQUESTED FROM FORM
-  if(req.method === 'POST'){
+  if(req.url === '/' && req.method === 'POST'){
     httpHelpers.collectData(req, function(data){
       data = data.substring(4); 
       if(archive.isUrlArchived(archive.paths.archivedSites + "/" + data)){ 
@@ -22,7 +22,7 @@ exports.handleRequest = function (req, res) {
           httpHelpers.sendResponse(res, htmlfile); 
         })
       } else {
-        if(!archive.isUrlInList()){
+        if(!archive.isUrlInList(data)){
           archive.addUrlToList(data);   
         }
         //return that "in list" page

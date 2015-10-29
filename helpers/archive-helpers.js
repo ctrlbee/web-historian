@@ -26,10 +26,19 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function() {
+  var data = fs.readFileSync(exports.paths.list).toString(); 
+  var sites = data.split('\n');
+  return sites;
 };
 
-exports.isUrlInList = function() {
-  return false;
+exports.isUrlInList = function(url) {
+  var inUrl = true;
+  var sites = exports.readListOfUrls();
+  if(sites.indexOf(url) === -1){
+    inUrl = false; 
+  }
+  console.log(inUrl);
+  return inUrl;
 };
 
 exports.addUrlToList = function(url) {
@@ -38,6 +47,10 @@ exports.addUrlToList = function(url) {
     if(err){saved = false;}
   });
   return saved; 
+};
+
+exports.rewriteList = function(list){
+  fs.writeFile(exports.paths.list, list); 
 };
 
 exports.isUrlArchived = function(url) {
@@ -53,7 +66,14 @@ exports.isUrlArchived = function(url) {
   return exists;
 };
 
-exports.downloadUrls = function() {
+exports.writeHtmlFile = function(siteToProcess, siteDoc, cb) {
 
+  fs.writeFile(exports.paths.archivedSites +"/"+ siteToProcess, siteDoc, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(); 
+    }
+  });
 
 };
