@@ -4,6 +4,7 @@
   "main": "web/basic-server.js",
   "license": "Copyright 2014, Hack Reactor. All rights reserved.",
   "dependencies": {
+    "bluebird": "^3.0.2",
     "http-request": "^0.7.0"
   },
   "devDependencies": {
